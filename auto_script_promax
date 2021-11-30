@@ -1,3 +1,21 @@
 opkg update
 opkg install uhttpd-mod-lua
-echo 192.168.1.207 mood.streamonboard.com >> /etc/hosts && echo 192.168.1.207 api.streamonboard.com >> /etc/hosts && echo 192.168.1.207 data.streamonboard.com >> /etc/hosts && echo iptables -I FORWARD -i br-lan -o tun0 -j ACCEPT >> /etc/firewall.user && echo iptables -I FORWARD -i tun0 -o br-lan -j ACCEPT >> /etc/firewall.user && echo iptables -t nat -A POSTROUTING -o br-lan -j MASQUERADE >> /etc/firewall.user && echo config host >> /etc/config/dhcp && echo option name 'serveur'  >> /etc/config/dhcp && echo option mac 'c4:00:ad:02:ce:07' >> /etc/config/dhcp && echo option ip '192.168.1.207' >> /etc/config/dhcp && uci set wireless.default_radio0.network="lan" && cd /etc/config/ && mv firewall firewall.old && curl -L -o firewall https://raw.githubusercontent.com/WiiBus/VoD/main/firewall_vod_7.0 && uci set network.lan.ifname="eth0.1 tap0" && uci set wireless.default_radio1.network="lan" && uci commit && /etc/init.d/uhttpd restart
+echo 192.168.1.207 mood.streamonboard.com >> /etc/hosts
+echo 192.168.1.207 api.streamonboard.com >> /etc/hosts 
+echo 192.168.1.207 data.streamonboard.com >> /etc/hosts 
+echo iptables -I FORWARD -i br-lan -o tun0 -j ACCEPT >> /etc/firewall.user 
+echo iptables -I FORWARD -i tun0 -o br-lan -j ACCEPT >> /etc/firewall.user 
+echo iptables -t nat -A POSTROUTING -o br-lan -j MASQUERADE >> /etc/firewall.user 
+cd /etc/config/ 
+mv firewall firewall.old 
+curl -L -o firewall https://raw.githubusercontent.com/WiiBus/VoD/main/firewall_vod_7.0 
+mv chilli chilli.old
+curl -L -o chilli https://raw.githubusercontent.com/WiiBus/VoD/main/chilli 
+mv network network.old
+curl -L -o network https://raw.githubusercontent.com/WiiBus/VoD/main/network_promax 
+mv dhcp dhcp.old
+curl -L -o dhcp https://raw.githubusercontent.com/WiiBus/VoD/main/dhcp 
+uci set wireless.default_radio1.network="lan" 
+uci set wireless.default_radio0.network="lan" 
+uci commit 
+/etc/init.d/uhttpd restart
