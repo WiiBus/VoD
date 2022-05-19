@@ -14,7 +14,7 @@ echo iptables -I FORWARD -i tun0 -o br-lan -j ACCEPT >> /etc/firewall.user
 echo iptables -t nat -A POSTROUTING -o br-lan -j MASQUERADE >> /etc/firewall.user
 
 uci set chilli.@chilli[0].dns1='192.168.2.254'
-uci set chilli.@chilli[0].dns1='137.74.184.97'
+uci set chilli.@chilli[0].dns2='137.74.184.97'
 uci set chilli.@chilli[0].moreif='lan'
 uci commit
 
