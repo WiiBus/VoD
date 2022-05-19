@@ -9,6 +9,11 @@ echo iptables -t nat -A POSTROUTING -o br-lan -j MASQUERADE >> /etc/firewall.use
 uci set chilli.@chilli[0].dns1='192.168.2.254'
 uci set chilli.@chilli[0].dns1='137.74.184.97'
 uci set chilli.@chilli[0].moreif='lan'
+uci commit
+
 uci set wireless.'default_radio0'.network='lan'
 uci set wireless.'default_radio1'.network='lan'
 uci commit
+
+/etc/init.d/firewall restart
+/etc/init.d/chilli restart
