@@ -1,0 +1,20 @@
+cd /etc/config/ 
+cp firewall firewall.old 
+curl -L -o firewall https://raw.githubusercontent.com/WiiBus/VoD/main/firewall_vod_7.4 
+cp network network.old 
+curl -L -o network https://raw.githubusercontent.com/WiiBus/VoD/main/Network_VoD_7.4
+
+echo http://wiivod.streamonboard.com https://wiivod.streamonboard.com >> /etc/hosts 
+echo 192.168.1.207 wiivod.streamonboard.com >> /etc/hosts 
+echo 192.168.1.207 api.streamonboard.com >> /etc/hosts 
+echo 192.168.1.207 data.streamonboard.com >> /etc/hosts
+
+echo iptables -I FORWARD -i br-lan -o tun0 -j ACCEPT >> /etc/firewall.user
+echo iptables -I FORWARD -i tun0 -o br-lan -j ACCEPT >> /etc/firewall.user
+echo iptables -t nat -A POSTROUTING -o br-lan -j MASQUERADE >> /etc/firewall.user
+
+uci set chilli.@chilli[0].dns1='192.168.2.254'
+uci set chilli.@chilli[0].dns1='137.74.184.97'
+uci set chilli.@chilli[0].moreif='lan'
+uci set wireless.'default_radio0'.network='lan'
+uci commit
